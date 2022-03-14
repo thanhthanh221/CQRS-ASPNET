@@ -1,6 +1,7 @@
 ﻿using Back_end_API.Models;
 using System.Collections.Generic;
 using System;
+using Back_end_API.Dtos;
 
 namespace Back_end_API.Data
 {
@@ -29,5 +30,19 @@ namespace Back_end_API.Data
             return people_New;
         }
 
+        public PresonModel UpdatePresion(PresonModel preson, PresonUpdateDto presonDto)
+        {
+            preson.FirstName = presonDto.FirstName;
+            preson.LastName = presonDto.LastName;
+            
+            return preson;
+        }
+        public PresonModel DeletePresion(PresonModel preson)
+        {
+            people.Remove(preson);
+            
+            return preson;
+        }
+    
     }
 }

@@ -43,15 +43,18 @@ namespace Back_end_API.Controllers
         }
 
         // PUT api/<PresionController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{Id}")]
+        public async Task<Back_end_API.Models.PresonModel> Put(Guid Id, [FromBody] PresonUpdateDto preson)
         {
+            return await mediator.Send(new UpdatePersonCommand(Id,preson));
         }
 
         // DELETE api/<PresionController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{Id}")]
+        public async Task<Back_end_API.Models.PresonModel> Delete(Guid Id)
         {
+            return await mediator.Send(new DeletePersonCommand(Id));
+
         }
     }
 }
