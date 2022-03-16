@@ -8,4 +8,5 @@ public interface IDataAccess
     PresonModel CreatePresion(string FirstName, string LastName);
     PresonModel UpdatePresion(PresonModel preson,PresonUpdateDto presonDto);
     PresonModel DeletePresion(PresonModel preson);
+    PresonModel GetPresonModelById(Guid Id);
 }

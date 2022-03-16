@@ -12,17 +12,18 @@ namespace Back_end_API.Handler
     public class GetPersionIdHandler : IRequestHandler<GetPersionIdQuery, PresonModel>
     {
         private readonly IMediator mediator;
-        public GetPersionIdHandler(IMediator mediator)
+        private readonly IDataAccess data;
+
+        public GetPersionIdHandler(IMediator mediator,IDataAccess data)
         {
             this.mediator = mediator;
+            this.data = data;
         }
 
         public async Task<PresonModel> Handle(GetPersionIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await mediator.Send(new GetPersionListQueries());
             
-            Back_end_API.Models.PresonModel? OutPut = result.Where(c => c.Id.Equals(request.Id)).FirstOrDefault();
-            return OutPut;
+            return await Task.FromResult(data.GetPresonModelById(request.Id));
         }
     }
 }

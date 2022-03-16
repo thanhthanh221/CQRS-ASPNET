@@ -17,6 +17,12 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
 using MediatR;
+using MongoDB;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using Back_end_API.Setting;
 
 namespace Back_end_API
 {
@@ -32,9 +38,18 @@ namespace Back_end_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Chuỗi kết nối tới MongoDb
+            BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+            BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
+            SettingMongoDb MongoDBsettings = Configuration.GetSection("MongoDbSettings").Get<SettingMongoDb>();
+
+            services.AddSingleton<IMongoClient>(servicesProvider => {
+                return new MongoClient(MongoDBsettings.ConnectionString);
+            });
             services.AddControllers(option =>{
                 option.SuppressAsyncSuffixInActionNames = false; //Phương thức xóa bỏ hậu tố bất đồng bộ (Async)
             });
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ASP_NET_API__Angular_2", Version = "v1" });

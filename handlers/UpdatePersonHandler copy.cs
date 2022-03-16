@@ -9,6 +9,7 @@ using System.Threading;
 using Back_end_API.Command;
 namespace Back_end_API.Handler
 {
+    // Xử lý tại đây
     public class UpdatePersonHandler : IRequestHandler<UpdatePersonCommand, PresonModel>
     {
         private readonly IDataAccess data;
